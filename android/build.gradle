@@ -4,37 +4,50 @@ version '1.0-SNAPSHOT'
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()  // ✅ THAY ĐỔI: jcenter() → mavenCentral()
     }
-
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0'
+        // ✅ THAY ĐỔI: AGP
+        classpath 'com.android.tools.build:gradle:8.1.4'
     }
 }
 
 rootProject.allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()  // ✅ THAY ĐỔI: jcenter() → mavenCentral()
     }
 }
 
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 29
-
+    // ✅ THAY ĐỔI: BẮT BUỘC - Thêm namespace cho AGP 8.0
+    namespace 'com.example.fluttershare'
+    
+    // ✅ THAY ĐỔI: compileSdkVersion 29 → 35
+    compileSdkVersion 35
+    
     defaultConfig {
-        minSdkVersion 16
+        // ✅ THAY ĐỔI: minSdkVersion 16 → 21 (recommended for AGP 8.0)
+        minSdkVersion 21
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    lintOptions {
+    
+    // ✅ THAY ĐỔI: lintOptions → lint
+    lint {
         disable 'InvalidPackage'
+    }
+    
+    // ✅ THÊM: Compile options cho JDK 17
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 }
 
 dependencies {
     api 'commons-io:commons-io:2.6'
-    implementation 'androidx.core:core:1.3.2'
+    // ✅ THAY ĐỔI: Nâng cấp androidx.core version
+    implementation 'androidx.core:core:1.12.0'
 }
-
